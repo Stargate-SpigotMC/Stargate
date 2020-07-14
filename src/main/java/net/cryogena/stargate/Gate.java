@@ -1,5 +1,6 @@
 package net.cryogena.stargate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Gate {
 	private boolean isLocked = false;
 	private String owner = "";
 	private BlockFace facing = null;
-	private String[] trusted = new String[] {};
+	private ArrayList<String> trusted = new ArrayList<String>();
 	//
 	public Gate(Plugin plugin) {
 		//
@@ -48,17 +49,15 @@ public class Gate {
 		this.facing = facing;
 	}
 	public boolean isTrusted(String playerName) {
-		return Arrays.asList(trusted).contains(playerName);
+		return trusted.contains(playerName);
 	}
 	public boolean setTrusted(String playerName, boolean trust) {
 		if (trust && !isTrusted(playerName)) {
-			trusted[trusted.length] = playerName;
+			trusted.add(playerName);
 			return true;
 		}
 		if (!trust && isTrusted(playerName)) {
-			List<String> list = Arrays.asList(trusted);
-			list.remove(playerName);
-			trusted = list.toArray(new String[0]);
+			trusted.remove(playerName);
 			return true;
 		}
 		return false;

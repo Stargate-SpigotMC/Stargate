@@ -1,57 +1,53 @@
 package net.cryogena.stargate;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
 
 public class GatesLib {
-	private Block[] _blocks_ = new Block[] {};
-	private Gate[] _gates_ = new Gate[] {};
+	private ArrayList<Block> blocks = new ArrayList<Block>();
+	private ArrayList<Gate> gates = new ArrayList<Gate>();
 	//
 	public GatesLib(Plugin plugin) {
 		//
 	}
 	public void clearGates() {
-		_gates_ = new Gate[] {};
+		gates = new ArrayList<Gate>();
 	}
 	public void clearBlocks() {
-		_blocks_ = new Block[] {};
+		blocks = new ArrayList<Block>();
 	}
 	public boolean isProtected(Block block) {
-		return Arrays.asList(_blocks_).contains(block);
+		return blocks.contains(block);
 	}
 	public boolean setProtect(Block block, boolean protect) {
 		if (protect && !isProtected(block)) {
-			_blocks_[_blocks_.length] = block;
+			blocks.add(block);
 			return true;
 		}
 		if (!protect && isProtected(block)) {
-			List<Block> list = Arrays.asList(_blocks_);
-			list.remove(block);
-			_blocks_ = list.toArray(new Block[0]);
+			blocks.remove(block);
 			return true;
 		}
 		return false;
 	}
 	public boolean isGate(Gate gate) {
-		return Arrays.asList(_gates_).contains(gate);
+		return gates.contains(gate);
 	}
 	public boolean setGate(Gate gate, boolean add) {
 		if (add && !isGate(gate)) {
-			_gates_[_gates_.length] = gate;
+			gates.add(gate);
 			return true;
 		}
 		if (!add && isGate(gate)) {
-			List<Gate> list = Arrays.asList(_gates_);
-			list.remove(gate);
-			_gates_ = list.toArray(new Gate[0]);
+			gates.remove(gate);
 			return true;
 		}
 		return false;
 	}
 	public List<Gate> getGates() {
-		return Arrays.asList(_gates_);
+		return gates;
 	}
 }
